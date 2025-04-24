@@ -12,4 +12,11 @@ Object-oriented design with clean separation of concerns (Game, Player, Board, D
 Customizable scoring rules (+10 for ladders, -10 for snakes, etc.) that influence gameplay strategy.
 Real-time score updates and a persistent leaderboard ranking players by performance.
 Scalable and testable architecture with support for saving/loading leaderboard data.
-Console-based interface for MVP, with optional upgrades to GUI or web-based frontends.
+Console-based interface for MVP, with optional upgrades to GUI or web-based frontends .
+
+#include<iostream>
+using namespace std;
+int main(){
+    cout<<"The top five players are:"<<endl;
+    retun 0;
+}
