@@ -8,7 +8,7 @@ To design and implement a multiplayer Snake and Ladder game with a rules-based p
 
 Key Features
 Turn-based multiplayer Snake and Ladder game with dynamic board setup .
-Object-oriented design with clean separation of concerns (Game, Player, Board, Dice, etc.).
+Object-oriented design with clean separation of concerns (Game, Player, Board, Dice, etc.) .
 Customizable scoring rules (+10 for ladders, -10 for snakes, etc.) that influence gameplay strategy.
 Real-time score updates and a persistent leaderboard ranking players by performance.
 Scalable and testable architecture with support for saving/loading leaderboard data .
