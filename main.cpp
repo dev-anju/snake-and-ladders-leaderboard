@@ -53,3 +53,89 @@ class Die {
 public:
   int throwDie() { return rand() % 6 + 1; }
 };
+
+class Scoreboard {
+public:
+  static void show(const vector<Gamer> &gamers) {
+    vector<Gamer> sortedGamers = gamers;
+    sort(sortedGamers.begin(), sortedGamers.end(),
+         [](const Gamer &a, const Gamer &b) {
+           if (a.score == b.score)
+             return a.name < b.name;
+           return a.score > b.score;
+         });
+
+    cout << "\n Scoreboard:\n";
+    for (const auto &g : sortedGamers) {
+      cout << g.name << " - Score: " << g.score << ", Cell: " << g.cell << endl;
+    }
+    cout << "------------------------\n";
+  }
+};
+
+class SnakesAndLadders {
+private:
+  vector<Gamer> gamers;
+  GameBoard board;
+  Die die;
+
+public:
+  SnakesAndLadders(const vector<string> &names) {
+    for (const auto &n : names) {
+      gamers.push_back(Gamer(n));
+    }
+  }
+
+  void play() {
+    Gamer *winner = nullptr;
+
+    while (!winner) {
+      for (auto &gamer : gamers) {
+        cout << gamer.name << ", press 'r' to roll the die: ";
+        char ch;
+        cin >> ch;
+        if (ch != 'r')
+          continue;
+
+        int roll = die.throwDie();
+        cout <<  gamer.name << " rolled a " << roll << "\n";
+        gamer.moveTo(roll);
+        gamer.cell = board.goTo(gamer.cell);
+
+        if (gamer.cell == 100) {
+          winner = &gamer;
+          break;
+        }
+      }
+      Scoreboard::show(gamers);
+    }
+
+    cout << "\nCongratulations, " << winner->name<< "! You reached cell 100 and won the game! \n";
+  }
+};
+
+int main() {
+  srand(time(0));
+  int numPlayers = 0;
+  cout << "Enter number of players: ";
+  cin >> numPlayers;
+
+  cout << "Enter " << numPlayers << " player name(s), separated by space:\n";
+  vector<string> names;
+  string name;
+
+  for (int i = 0; i < numPlayers; ++i) {
+    cin >> name;
+    names.push_back(name);
+  }
+
+  if (names.size() < 2) {
+    cout << "Need at least 2 players to start the game.\n";
+    return 0;
+  }
+
+  SnakesAndLadders game(names);
+  game.play();
+
+  return 0;
+}
