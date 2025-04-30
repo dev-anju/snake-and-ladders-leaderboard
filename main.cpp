@@ -47,6 +47,13 @@ public:
     }
     return cell;
   }
+ bool isSnake(int cell) {
+    return snakes.count(cell);
+  }
+
+  bool isLadder(int cell) {
+    return ladders.count(cell);
+  }
 };
 
 class Die {
@@ -98,9 +105,24 @@ public:
           continue;
 
         int roll = die.throwDie();
-        cout <<  gamer.name << " rolled a " << roll << "\n";
-        gamer.moveTo(roll);
-        gamer.cell = board.goTo(gamer.cell);
+        cout << gamer.name << " rolled a " << roll << "\n";
+
+        // Move forward
+        gamer.cell += roll;
+        if (gamer.cell > 100)
+          gamer.cell = 100;
+
+        gamer.score += roll; // Base score from dice roll
+
+        int newCell = board.goTo(gamer.cell);
+
+        if (newCell < gamer.cell) {
+          gamer.score -= 10; // Snake penalty
+        } else if (newCell > gamer.cell) {
+          gamer.score += 10; // Ladder bonus
+        }
+
+        gamer.cell = newCell;
 
         if (gamer.cell == 100) {
           winner = &gamer;
@@ -120,7 +142,7 @@ int main() {
   cout << "Enter number of players: ";
   cin >> numPlayers;
 
-  cout << "Enter " << numPlayers << " player name(s), separated by space:\n";
+  cout << "Enter " << numPlayers << " player name(s), separated by enter:\n";
   vector<string> names;
   string name;
 
